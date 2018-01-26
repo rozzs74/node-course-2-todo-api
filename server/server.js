@@ -23,8 +23,16 @@ app.post('/todos', (req, res) => {
     });
 });
 
+app.get('/todos', (req, res) => {
+    Todo.find().then((todos) => {
+        res.send({todos});
+    }, (err) => { 
+        console.log('ERR', err);
+    });
+});
+
 app.listen(3000, () => {
     console.log('Started on port 3000');
 });
 
-module.exports = {app};
+module.exports = { app };
