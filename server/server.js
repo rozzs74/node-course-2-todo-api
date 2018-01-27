@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const pick = require('lodash/pick');
 const express = require('express');
 const bodyParser = require('body-parser')
 const { mongoose } = require('./db/moongose');
@@ -73,7 +73,7 @@ app.delete('/todos/:id', (req, res) => {
 
 app.patch('/todos/:id', (req, res) => {
     var todoId = req.params.id;
-    var body = _.pick(req.body, ['text', 'completed']);
+    var body = pick(req.body, ['text', 'completed']);
 
     if (!ObjectID.isValid(todoId)) {
         return res.status(404).send();
