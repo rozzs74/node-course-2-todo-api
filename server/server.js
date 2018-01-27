@@ -8,7 +8,7 @@ const { mongoose } = require('./db/moongose');
 const { Todo } = require('./models/todo');
 const { User } = require('./models/user');
 const { ObjectID } = require('mongodb');
-
+const { authenticate } = require('./middleware/authenticate');
 const app = express();
 const port = process.env.PORT;
 
@@ -112,6 +112,13 @@ app.post('/users', (req, res) => {
     }).catch((error) => {
         res.status(400).send(error);
     });
+});
+
+
+
+// private route eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTZjNzlhODg4Y2M4ZDI0YTFlMmQ4ZDIiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3MDU4NDcyfQ.AeGFp9GG0xYkb-X4KEGdr2LuY7c7Zhanhhal4m2jIg4
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user);
 });
 
 app.listen(port, () => {
