@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json()); // Tell express use the body parser.
-
+//https://thawing-temple-24183.herokuapp.com/
 // Create new todo via API
 
 app.post('/todos', (req, res) => {
@@ -44,10 +44,29 @@ app.get('/todos/:id', (req, res) => {
         if (!todo) {
             return res.status(404).send();
         }
-        res.status(200).send({todo});
+        res.status(200).send({ todo });
     }).catch((error) => {
         console.log('Error', error);
         res.status(404);
+    });
+});
+
+app.delete('/todos/:id', (req, res) => {
+
+    var todoId = req.params.id;
+
+    if (!ObjectID.isValid(todoId)) {
+        return res.status(404).send();
+    }
+
+    Todo.findByIdAndRemove(todoId).then((todo) => {
+        if (!todo) {
+            return res.status(404).send();
+        }
+        res.status(200).send(todo);
+    }).catch((error) => {
+        // empty body
+        res.status(400).send();
     });
 });
 
