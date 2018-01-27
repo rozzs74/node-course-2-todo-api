@@ -1,3 +1,5 @@
+require('./config/config');
+
 const pick = require('lodash/pick');
 const isBoolean = require('lodash/isBoolean');
 const express = require('express');
@@ -8,7 +10,7 @@ const { User } = require('./models/user');
 const { ObjectID } = require('mongodb');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app.use(bodyParser.json()); // Tell express use the body parser.
 //https://thawing-temple-24183.herokuapp.com/
