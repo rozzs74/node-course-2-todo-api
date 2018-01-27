@@ -1,4 +1,4 @@
-require('./config/config');
+require('./config/config.js');
 
 const pick = require('lodash/pick');
 const isBoolean = require('lodash/isBoolean');
