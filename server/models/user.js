@@ -45,6 +45,7 @@ UserSchema.methods.toJSON = function () {
 	return pick(userObject, ['_id', 'email']);
 }
 
+// instance methods
 UserSchema.methods.generateAuthToken = function () {
 	var user = this;
 	var access = 'auth';
@@ -91,7 +92,20 @@ UserSchema.pre('save', function (next) {
 		next(); // call this to complete middleware event
 	}
 });
-// statics are model methods
+
+UserSchema.methods.removeToken = function (token) {
+	//$pull operatort pull data on array
+
+	var user = this;
+
+	return user.update({
+		$pull: {
+			tokens: { token }
+		}
+	});
+};
+
+// statics are model  methods
 UserSchema.statics.findByCredentials = function (email, password) {
 	var User = this;
 
