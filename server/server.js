@@ -18,7 +18,7 @@ app.use(bodyParser.json()); // Tell express use the body parser.
 
 app.post("/todos", authenticate, async (req, res) => {
 	try {
-		const todo = await new Todo({ text: req.body.text, _creator: req.user._id });
+		const todo = await new Todo({text: req.body.text, _creator: req.user._id});
 		const doc = await todo.save();
 		await res.send(doc);
 	} catch (e) {
@@ -29,7 +29,7 @@ app.post("/todos", authenticate, async (req, res) => {
 app.get("/todos", authenticate, async (req, res) => {
 	try {
 		const todos = await Todo.find({ _creator: req.user._id });
-		await res.send({ todos });
+		await res.send({todos});
 	} catch (erreor) {
 		res.status(404).send(e);
 	}
@@ -41,13 +41,13 @@ app.get("/todos/:id", authenticate, async (req, res) => {
 		if (!ObjectID.isValid(todoId)) {
 			return res.status(404).send();
 		}
-		const todo = await Todo.findOne({ _id: todoId, _creator: req.user._id });
+		const todo = await Todo.findOne({ _id: todoId, _creator: req.user._id});
 		if (!todo) {
 			return res.status(404).send();
 		}
 		res.status(200).send({ todo });
 	} catch (e) {
-		res.status(404).send(e);
+		res.status(404).send(e);	
 	}
 });
 
@@ -67,7 +67,7 @@ app.delete("/todos/:id", authenticate, async (req, res) => {
 		}
 		res.status(200).send({ todo });
 	} catch (e) {
-		res.status(400).send(e);
+		res.status(400).send(e);		
 	}
 });
 
@@ -83,7 +83,7 @@ app.patch("/todos/:id", authenticate, async (req, res) => {
 		if (!ObjectID.isValid(todoId)) {
 			return res.status(404).send();
 		}
-
+	
 		if (isBoolean(body.completed) && body.completed) {
 			body.completedAt = new Date().getTime();
 		} else {
@@ -96,9 +96,9 @@ app.patch("/todos/:id", authenticate, async (req, res) => {
 		if (!todo) {
 			return res.status(404).send();
 		}
-
+		
 		res.send({ todo });
-
+		
 	} catch (e) {
 		res.status(400).send();
 	}
